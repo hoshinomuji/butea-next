@@ -66,33 +66,35 @@ export function Globe({
   }
 
   useEffect(() => {
-    const onResize = () => {
-      if (canvasRef.current) {
-        widthRef.current = canvasRef.current.offsetWidth
-      }
-    }
-    window.addEventListener("resize", onResize)
-    onResize()
+    let globe: ReturnType<typeof createGlobe> | null = null
 
-    const globe = createGlobe(canvasRef.current!, {
-      ...config,
-      width: widthRef.current * 2,
-      height: widthRef.current * 2,
-      onRender: (state: Record<string, number>) => {
-        if (!pointerInteracting.current) phiRef.current += 0.004
-        state.phi = phiRef.current + rs.get()
-        state.width = widthRef.current * 2
-        state.height = widthRef.current * 2
-      },
-    } as Parameters<typeof createGlobe>[1])
+    const observer = new ResizeObserver(([entry]) => {
+      widthRef.current = entry.contentRect.width
+      if (globe) return
+      if (widthRef.current === 0) return
 
-    setTimeout(() => {
-      if (canvasRef.current) canvasRef.current.style.opacity = "1"
-    }, 0)
+      globe = createGlobe(canvasRef.current!, {
+        ...config,
+        width: widthRef.current * 2,
+        height: widthRef.current * 2,
+        onRender: (state: Record<string, number>) => {
+          if (!pointerInteracting.current) phiRef.current += 0.004
+          state.phi = phiRef.current + rs.get()
+          state.width = widthRef.current * 2
+          state.height = widthRef.current * 2
+        },
+      } as Parameters<typeof createGlobe>[1])
+
+      setTimeout(() => {
+        if (canvasRef.current) canvasRef.current.style.opacity = '1'
+      }, 0)
+    })
+
+    if (canvasRef.current) observer.observe(canvasRef.current)
 
     return () => {
-      globe.destroy()
-      window.removeEventListener("resize", onResize)
+      observer.disconnect()
+      globe?.destroy()
     }
   }, [rs, config])
 
