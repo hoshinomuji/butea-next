@@ -2,11 +2,30 @@
 import { useEffect, useRef } from 'react'
 import { MorphingText } from '@/components/ui/morphing-text'
 import { Highlighter } from '@/components/ui/highlighter'
-import { Globe } from '@/components/ui/globe'
+import { IconCloud } from '@/components/ui/icon-cloud'
 import { RainbowButton } from '@/components/ui/rainbow-button'
 import gsap from 'gsap'
 
 const GREETINGS = ['สวัสดี', 'Hello', 'Bonjour', 'こんにちは', '안녕하세요']
+
+const STEM_ICONS = [
+  'https://cdn.simpleicons.org/autodesk',
+  'https://cdn.simpleicons.org/python',
+  'https://cdn.simpleicons.org/arduino',
+  'https://cdn.simpleicons.org/github',
+  'https://cdn.simpleicons.org/figma',
+  'https://cdn.simpleicons.org/blender',
+  'https://cdn.simpleicons.org/linux',
+  'https://cdn.simpleicons.org/raspberrypi',
+  'https://cdn.simpleicons.org/solidworks',
+  'https://cdn.simpleicons.org/notion',
+  'https://cdn.simpleicons.org/canva',
+  'https://cdn.simpleicons.org/typescript',
+  'https://cdn.simpleicons.org/react',
+  'https://cdn.simpleicons.org/vercel',
+  'https://cdn.simpleicons.org/instagram',
+  'https://cdn.simpleicons.org/tiktok',
+]
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -98,16 +117,8 @@ export default function HeroSection() {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-[420px] h-[420px] rounded-full bg-violet-300/30 blur-3xl" />
           </div>
-          <div className="relative w-[480px] h-[480px]">
-            <Globe className="w-full h-full" />
-            <div className="absolute top-[28%] right-[18%] flex items-center gap-1.5 pointer-events-none">
-              <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_6px_2px_rgba(217,70,239,0.5)]" />
-              <span className="text-[10px] font-semibold text-[var(--text-body)] tracking-wider">SILVERSTONE</span>
-            </div>
-            <div className="absolute bottom-[28%] left-[22%] flex items-center gap-1.5 pointer-events-none">
-              <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_6px_2px_rgba(217,70,239,0.5)]" />
-              <span className="text-[10px] font-semibold text-[var(--text-body)] tracking-wider">BANGKOK</span>
-            </div>
+          <div className="relative w-[400px] h-[400px]">
+            <IconCloud images={STEM_ICONS} />
           </div>
         </div>
       </div>
